@@ -1,6 +1,7 @@
 const express = require('express');
 // const fileUpload = require('express-fileupload')
 const cors = require('cors');
+const multer = require('multer');
 const mongoose = require('mongoose');
 
 const app = express()
@@ -22,6 +23,18 @@ const driverIRouter = require('./routes/driverDetails')
 
 app.use('/patient', patientDRouter);
 app.use('/driver', driverIRouter);
+
+app.use('/licence', express.static('upload/images'));
+
+function errHandler(err, req, res, next) {
+  if (err instanceof multer.MulterError) {
+      res.json({
+          success: 0,
+          message: err.message
+      })
+  }
+}
+app.use(errHandler);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

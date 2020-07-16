@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DriverDetailsSchema = new Schema ({
-    userID : { type:String, required:true ,unique: true },
+    userID : { type:String ,unique: true },
     username : { type: String, unique: true},
-    cellPhoneNo: { type:Number, required:true },
+    mobileNo: { type:Number },
+    image: { type:String }
 },{
     timestamps: true,
 });
