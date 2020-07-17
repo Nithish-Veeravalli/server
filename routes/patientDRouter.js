@@ -6,16 +6,26 @@ router.route('/').get((req, res) =>{
     .then(patient => res.json(patient))
     .catch(err => res.status(400).json('Error ' + err));
 });
+router.route('/:drivermobileNo').get((req, res) =>{
+    const num = req.params.drivermobileNo
+    PatientDetails.find({ drivermobileNo : num , active : true })
+    // DriverInfo.find({ mobileNo : num })
+    .then(patient => res.json(patient))
+    .catch(err => res.status(400).json('Error ' + err));
+});
 
 router.route('/add').post((req, res) =>{
-    const driverUserID = req.body.driverUserID;
+    // const driverUserID = req.body.driverUserID;
     const username = req.body.username;
     const caseP = req.body.caseP;
-    const caseCriticalness = req.body.caseCriticalness;
-    const pickUpLoaction = req.body.pickUpLoaction;
+    const patientmobileNo = req.body.patientmobileNo;
+    const drivermobileNo = req.body.drivermobileNo;
+    // const caseCriticalness = req.body.caseCriticalness;
+    // const patientLocation = req.body.patientLocation;
 
     const newPatient = new PatientDetails({
-        driverUserID, username, caseP,caseCriticalness, pickUpLoaction
+        // driverUserID, caseCriticalness,, patientLocation
+        username, caseP,drivermobileNo, patientmobileNo
     });
 
     newPatient.save()
@@ -26,10 +36,12 @@ router.route('/add').post((req, res) =>{
 router.route('/update/:id').post((req, res) =>{
     PatientDetails.findById(req.params.id)
     .then(Patient =>{
-        Patient.destination = req.body.destination;
+        Patient.destinationLocation = req.body.destinationLocation;
+        Patient.driverLocation = req.body.driverLocation;
         Patient.polyline = req.body.polyline;
-        Patient.hospitalName = req.body.hospitalName;
+        // Patient.hospitalName = req.body.hospitalName;
         Patient.permission = req.body.permission;
+        Patient.active = req.body.active;
 
         Patient.save()
         .then(() => res.json('Patient information updated'))

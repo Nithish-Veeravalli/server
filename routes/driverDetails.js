@@ -19,15 +19,22 @@ router.route('/').get((req, res) =>{
     .then(driver => res.json(driver))
     .catch(err => res.status(400).json('Error ' + err));
 });
+router.route('/:mobileNo').get((req, res) =>{
+    const num = req.params.mobileNo
+    DriverInfo.find({ mobileNo : num })
+    .then(driver => res.json(driver))
+    .catch(err => res.status(400).json('Error ' + err));
+});
 
-router.route('/add').post(upload.single('DL'),(req, res) =>{
-    const userID = req.body.userID;
+router.route('/add').post((req, res) =>{
+    // const userID = req.body.userID;
     const username = req.body.username;
     const mobileNo = req.body.mobileNo;
-    const image = `http://localhost:1080/licence/${req.file.filename}`
+    // const image = `http://localhost:1080/licence/${req.file.filename}`
 
     const newDriver = new DriverInfo({
-        userID, username, mobileNo, image,
+        // userID, image,
+        username, mobileNo, 
     });
 
     newDriver.save()
@@ -35,8 +42,8 @@ router.route('/add').post(upload.single('DL'),(req, res) =>{
     .catch(err => res.status(400).json('Error ' + err));
 });
 
-// router.route('/update/:id').post(upload.single('user'), (req, res) =>{
-//     DriverInfo.findById(req.params.id)
+// router.route('/find/:mobileNo').post(upload.single('user'), (req, res) =>{
+//     DriverInfo.findById(req.params.mobileNo)
 //     // driver.image = `${Date.now()}`
 //     .then(driver =>{
 //         driver.save()
