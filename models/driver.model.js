@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const DriverDetailsSchema = new Schema ({
     // userID : { type:String ,unique: true },
     username : { type: String, unique: true},
-    mobileNo: { type:Number },
+    mobileNo: { type:String },
     // image: { type:String }
 },{
     timestamps: true,
