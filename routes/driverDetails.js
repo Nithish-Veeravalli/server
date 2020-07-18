@@ -19,7 +19,7 @@ router.route('/').get((req, res) =>{
     .then(driver => res.json(driver))
     .catch(err => res.status(400).json('Error ' + err));
 });
-router.route('/:mobileNo').get((req, res) =>{
+router.get(('/:mobileNo',req, res) =>{
     const num = req.params.mobileNo
     DriverInfo.find({ mobileNo : num })
     .then(driver => res.json(driver))
